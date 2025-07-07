@@ -1,16 +1,17 @@
 import express from "express"
-import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
 import authRoutes from "./routes/authRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 import bodyParser from "body-parser"
+import dotenv from "dotenv"
 
 const app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const port = 3000
 dotenv.config()
 
+const port = 3000
+
+// Web Pages
 app.get('/', (req, res) => {
     res.send('Landing Page!')
 })
@@ -23,12 +24,10 @@ app.get('/register', (req, res) => {
     res.send('Register Page')
 })
 
+// APIs
 app.use(authRoutes)
 
-app.get('/content', (req, res) => {
-    res.send('Here we have some content!')
-})
-
+app.use(userRoutes)
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`)
