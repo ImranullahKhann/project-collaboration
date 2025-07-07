@@ -1,7 +1,6 @@
 {
-  "name": "project-collaboration",
+  "name": "project-collaboration-server",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -29,5 +28,6 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.1"
-  }
+  },
+  "description": ""
 }
