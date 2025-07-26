@@ -1,12 +1,13 @@
 import express from "express"
+import { registerUser, userLogin } from "../controllers/userControllers.js"
 import verifyToken from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
-router.get("/content", verifyToken, (req, res) => {
-    res.status(200).json({
-        message: "You have access."
-    })
-})
+// Authentication
+router.post('/users/login', userLogin);
+
+// Registration
+router.post('/users/register', registerUser);
 
 export default router
