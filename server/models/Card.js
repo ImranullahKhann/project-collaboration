@@ -9,6 +9,7 @@ const cardSchema = new Schema({
     },
     title: String,
     description: String,
+    labels: [String],
     dueDate: {
         type: Date,
     },
