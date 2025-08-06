@@ -38,23 +38,15 @@ userSchema.methods.generateAccessToken = function () {
         "user": {
             "id": this._id,
             "username": this.username,
-            "email": this.email,
-            "password": this.password
+            "password": this.passwordHash
         }
     }, 
     process.env.TOKEN_SECRET,
     { expiresIn: "1d" }
     )
 
-    return accessToken
-}
-
-userSchema.methods.toUserResponse = function () {
     return {
-        username: this.username,
-        email: this.email,
-        avatarUrl: this.avatarUrl,
-        token: this.generateAccessToken()
+        token: accessToken
     }
 }
 
