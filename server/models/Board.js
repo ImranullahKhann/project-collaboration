@@ -41,6 +41,7 @@ boardSchema.methods.toResponse = async function () {
     const membersUsernames = memberUsers.map(member => member.username)
 
     return {
+        id: this._id,
         title: this.title,
         description: this.description,
         owner: ownerObject.username,

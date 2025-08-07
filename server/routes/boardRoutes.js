@@ -1,23 +1,22 @@
 import express from "express"
-import verifyToken from "../middleware/authMiddleware.js"
-import { userBoards, createBoard } from "../controllers/boardControllers.js"
+import { userBoards, createBoard, getBoard } from "../controllers/boardControllers.js"
 
 
 const router = express.Router()
 
 // list user’s boards
-router.get('/get', verifyToken, userBoards)
+router.get('/get', userBoards)
 
 // create a new board
-router.post('/create', verifyToken, createBoard)
+router.post('/create', createBoard)
 
-// // fetch one board with lists/cards
-// router.get('/get/:id')
+// fetch one board with lists/cards
+router.get('/:id', getBoard)
 
-// // update board details
-// router.put('update/:id')
+// update board details
+// router.put('/:id')
 
 // // delete board
-// router.delete('delete/:id')
+// router.delete('/:id')
 
 export default router

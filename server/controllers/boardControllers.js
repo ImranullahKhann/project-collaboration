@@ -1,12 +1,10 @@
 import asyncHandler from "express-async-handler"
-import bcrypt from "bcrypt"
 import User from "../models/User.js"
 import Board from "../models/Board.js"
 
 // @desc getting user's boards
 // @route /boards/get
 // @access Private
-// @required Authentication
 // @return Boards
 const userBoards = asyncHandler(async (req, res) => {
     const user = req.user
@@ -23,7 +21,6 @@ const userBoards = asyncHandler(async (req, res) => {
 
     const boardPromises = boards.map(async (board) => {
         const resp = await board.toResponse()
-        console.log(resp)
         return resp
     })
 
@@ -34,9 +31,9 @@ const userBoards = asyncHandler(async (req, res) => {
 
 // @desc creates a board 
 // @route /boards/create
-// @access private
-// @required 
-// @return
+// @access Private
+// @required {title, desc}
+// @return Board
 const createBoard = asyncHandler(async (req, res) => {
     const user = req.user
     const { title, desc } = req.body
@@ -56,14 +53,12 @@ const createBoard = asyncHandler(async (req, res) => {
     let board = null
     
     try {
-        board = await Board.create(boardObject);
+        board = await Board.create(boardObject)
     }
     catch (e) {
         return res.status(422).json({
-            errors: {
-                body: "Unable to create the baord",
-                reason: e
-            }
+            message: "Unable to create a list",
+            error: e
         })
     }
 
@@ -72,4 +67,21 @@ const createBoard = asyncHandler(async (req, res) => {
     res.status(201).json(resp)
 })
 
-export { userBoards, createBoard }
+// @desc gets a user's board with it's lists
+// @route GET /boards/:id
+// @access Private
+// @return Board 
+const getBoard = asyncHandler(async (req, res) => {
+    const id = req.params.id
+    const board = await Board.findById(id).exec()
+    const boardResponse = await board.toResponse()
+    const popBoards = await board.populate('lists')
+    const lists = popBoards.lists.map(list => list.toResponse())
+    const respObject = {
+        board: boardResponse,
+        lists: lists
+    }
+    res.status(200).json(respObject)
+})
+
+export { userBoards, createBoard, getBoard }

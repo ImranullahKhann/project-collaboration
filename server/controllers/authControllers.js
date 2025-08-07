@@ -54,7 +54,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access Public
 // @required fields {email, password}
 // @return access token
-const userLogin = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     // confirm data
@@ -62,18 +62,18 @@ const userLogin = asyncHandler(async (req, res) => {
         return res.status(400).json({message: "All fields are required"});
     }
 
-    const loginUser = await User.findOne({ email: email }).exec();
+    const foundUser = await User.findOne({ email: email }).exec();
 
 
-    if (!loginUser) {
+    if (!foundUser) {
         return res.status(404).json({message: "User Not Found"});
     }
 
-    const match = await bcrypt.compare(password, loginUser.passwordHash);
+    const match = await bcrypt.compare(password, foundUser.passwordHash);
 
     if (!match) return res.status(401).json({ message: 'Unauthorized: Wrong password' })
 
-    res.status(201).json(loginUser.generateAccessToken())
+    res.status(201).json(foundUser.generateAccessToken())
 });
 
-export { registerUser, userLogin }
+export { registerUser, loginUser }
