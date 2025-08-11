@@ -84,4 +84,50 @@ const getBoard = asyncHandler(async (req, res) => {
     res.status(200).json(respObject)
 })
 
-export { userBoards, createBoard, getBoard }
+// @desc updates a board
+// @route PUT /boards/:id
+// @access Private
+// @required {title, description, owner, members}
+const updateBoard = asyncHandler(async (req, res) => {
+    const boardId = req.params.id
+    const { title, desc, owner, members } = req.body
+
+    try {
+        const updateFields = {};
+        if (title != null) updateFields.title = title;
+        if (desc != null) updateFields.description = desc;
+        if (owner != null) updateFields.owner = owner;
+        if (members != null) updateFields.members = members;
+
+        const updatedBoard = await Board.updateOne(
+            { _id: boardId },
+            { $set: updateFields }
+        );
+    }
+    catch (e) {
+        return res.status(400).json({
+            message: "Unable to update the list",
+            reason: e
+        })
+    }
+})
+
+// @desc deletes a board
+// @route DELETE /board/:id
+// @access Private
+const deleteBoard = asyncHandler(async (req, res) => {
+    const id = req.params.id
+    
+    try {
+        Board.deleteOne({ _id: id }).exec()
+    }
+    catch (e) {
+        res.status(404).json({
+            message: "Board not found"
+        })
+    }
+    
+    res.status(204).json()
+})
+
+export { userBoards, createBoard, getBoard, updateBoard, deleteBoard }

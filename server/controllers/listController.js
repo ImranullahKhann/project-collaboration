@@ -42,11 +42,9 @@ const updateList = asyncHandler(async (req, res) => {
         res.json(400).json({
             message: "Please provide the appropriate fields"
         })
-
-    let updatedList = null
         
     try {
-        updatedList = await List.updateOne(
+        const updatedList = await List.updateOne(
             { _id: listId },
             { $set: { title: title, position: position }}
         )
@@ -63,7 +61,7 @@ const updateList = asyncHandler(async (req, res) => {
     })
 })
 
-// @desc  delte a list
+// @desc  delete a list
 // @route DELETE /lists/:id
 // @access Private
 const deleteList = asyncHandler(async (req, res) => {
@@ -73,7 +71,7 @@ const deleteList = asyncHandler(async (req, res) => {
     
     if (!list) 
         return res.status(404).json({
-            message: "List doesn't exist"
+            message: "List not found"
         })
     
     await list.deleteOne()

@@ -1,5 +1,5 @@
 import express from "express"
-import { userBoards, createBoard, getBoard } from "../controllers/boardControllers.js"
+import { userBoards, createBoard, getBoard, updateBoard, deleteBoard } from "../controllers/boardControllers.js"
 
 
 const router = express.Router()
@@ -14,9 +14,9 @@ router.post('/create', createBoard)
 router.get('/:id', getBoard)
 
 // update board details
-// router.put('/:id')
+router.put('/:id', updateBoard)
 
 // // delete board
-// router.delete('/:id')
+router.delete('/:id', deleteBoard)
 
 export default router

@@ -6,8 +6,7 @@ const Schema = mongoose.Schema
 const boardSchema = Schema({
     title: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     description: String,
     owner: {
@@ -30,6 +29,9 @@ boardSchema.virtual("lists", {
     localField: "_id",
     foreignField: "boardId"
 })
+
+// A compound index to enforce unique board names per user
+boardSchema.index({ owner: 1, title: 1 }, { unique: true });
 
 boardSchema.methods.toResponse = async function () {
     const ownerObject = await User.findById(this.owner).exec()
