@@ -9,7 +9,10 @@ const listSchema = new Schema({
         required: true
     },
     title: String,
-    position: Number
+    position: {
+        type: Number,
+        required: true
+    }
 })
 
 listSchema.virtual('cards', {
@@ -17,6 +20,9 @@ listSchema.virtual('cards', {
     localField: "_id",
     foreignField: "listId"
 })
+
+// A compound index to enforce unique position for every list in a board
+listSchema.index({ boardId: 1, position: 1 }, { unique: true })
 
 listSchema.methods.toResponse = function () {
     return {

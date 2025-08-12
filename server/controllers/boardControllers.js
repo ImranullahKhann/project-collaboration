@@ -32,7 +32,7 @@ const userBoards = asyncHandler(async (req, res) => {
 // @desc creates a board 
 // @route /boards/create
 // @access Private
-// @required {title, desc}
+// @required {title, *desc}
 // @return Board
 const createBoard = asyncHandler(async (req, res) => {
     const user = req.user
@@ -62,18 +62,20 @@ const createBoard = asyncHandler(async (req, res) => {
         })
     }
 
-    const resp = await board.toResponse()
+    const boardResponse = await board.toResponse()
 
-    res.status(201).json(resp)
+    res.status(201).json(boardResponse)
 })
 
 // @desc gets a user's board with it's lists
 // @route GET /boards/:id
 // @access Private
-// @return Board 
+// @return Board with it's Lists
 const getBoard = asyncHandler(async (req, res) => {
     const id = req.params.id
-    const board = await Board.findById(id).exec()
+    const board = await Board.findById(id)
+    if (!board) 
+        return res.status(404).json({message:"List not found"})
     const boardResponse = await board.toResponse()
     const popBoards = await board.populate('lists')
     const lists = popBoards.lists.map(list => list.toResponse())
@@ -93,23 +95,28 @@ const updateBoard = asyncHandler(async (req, res) => {
     const { title, desc, owner, members } = req.body
 
     try {
-        const updateFields = {};
-        if (title != null) updateFields.title = title;
-        if (desc != null) updateFields.description = desc;
-        if (owner != null) updateFields.owner = owner;
-        if (members != null) updateFields.members = members;
-
-        const updatedBoard = await Board.updateOne(
+        const updateFields = {
+            title: title,
+            description: desc,
+            owner: owner,
+            members: members
+        }
+        
+        await Board.updateOne(
             { _id: boardId },
             { $set: updateFields }
-        );
+        )
     }
     catch (e) {
         return res.status(400).json({
-            message: "Unable to update the list",
+            message: "Unable to update the board",
             reason: e
         })
     }
+
+    res.status(200).json({
+        message: "Board updated successfully"
+    })
 })
 
 // @desc deletes a board
@@ -119,7 +126,7 @@ const deleteBoard = asyncHandler(async (req, res) => {
     const id = req.params.id
     
     try {
-        Board.deleteOne({ _id: id }).exec()
+        await Board.deleteOne({ _id: id })
     }
     catch (e) {
         res.status(404).json({

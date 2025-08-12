@@ -29,6 +29,26 @@ const createList = asyncHandler(async (req, res) => {
     })
 })
 
+// @desc gets a user's list with it's cards
+// @route GET /lists/:id
+// @access Private
+// @return List with it's Cards
+const getList = asyncHandler(async (req, res) => {
+    const id = req.params.id
+    const list = await List.findById(id)
+    if (!list) 
+        return res.status(404).json({message:"List not found"})
+    const listResponse = await list.toResponse()
+    const popList = await list.populate('cards')
+    const cards = popList.cards.map(card => card.toResponse())
+
+    const respObject = {
+        list: listResponse,
+        cards: cards
+    }
+    res.status(200).json(respObject)
+})
+
 // @desc update a list
 // @route PUT /lists/:id
 // @access Private
@@ -79,4 +99,4 @@ const deleteList = asyncHandler(async (req, res) => {
     res.status(204).json()
 })
 
-export { createList, updateList, deleteList }
+export { createList, updateList, deleteList, getList }

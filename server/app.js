@@ -7,7 +7,7 @@ dotenv.config()
 connectDB()
 
 const app = createServer()
-const port = 5000
+const port = process.env.PORT || 4000
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');

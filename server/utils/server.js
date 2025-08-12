@@ -2,9 +2,10 @@ import express from "express"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
 import authRoutes from "../routes/authRoutes.js"
+import verifyToken from "../middleware/authMiddleware.js"
 import boardRoutes from "../routes/boardRoutes.js"
 import listRoutes from "../routes/listRoutes.js"
-import verifyToken from "../middleware/authMiddleware.js"
+import cardRoutes from "../routes/cardRoutes.js"
 
 const createServer = function () {
     const app = express()
@@ -24,6 +25,7 @@ const createServer = function () {
 
     app.use('/lists', verifyToken, listRoutes)
 
+    app.use('/cards', verifyToken, cardRoutes)
 
     app.use((err, req, res, next) => {
         console.log(err.stack)
