@@ -4,14 +4,13 @@ import Card from "../models/Card.js"
 // @desc create a card
 // @route POST /cards/create
 // @access Private
-// @required {listid, title, *desc, *labels, *dueDate, *assignedTo, position}
+// @required {listid, title, *desc, *dueDate, *assignedTo, position}
 // @return Card
 const createCard = asyncHandler(async (req, res) => {
     const {
         listId,
         title,
         desc,
-        labels,
         dueDate,
         assignedTo,
         position
@@ -22,7 +21,6 @@ const createCard = asyncHandler(async (req, res) => {
         position: position
     }
     if (desc) cardObject["description"] = desc
-    if (labels) cardObject["labels"] = labels
     if (dueDate) cardObject["dueDate"] = dueDate
     if (assignedTo) cardObject["assignedTo"] = assignedTo
     
@@ -46,14 +44,13 @@ const createCard = asyncHandler(async (req, res) => {
 // @desc updates a card's fields
 // @route PUT /cards/:id
 // @access Private
-// @required {listid, title, desc, labels, dueDate, assignedTo, position}
+// @required {listid, title, desc, dueDate, assignedTo, position}
 const updateCard = asyncHandler(async (req, res) => {
     const id = req.params.id
     const {
         listId,
         title,
         desc,
-        labels,
         dueDate,
         assignedTo,
         position
@@ -63,7 +60,6 @@ const updateCard = asyncHandler(async (req, res) => {
         listid: listId,
         title: title,
         description: desc,
-        labels: labels,
         dueDate: dueDate,
         assignedTo: assignedTo,
         position: position

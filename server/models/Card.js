@@ -13,7 +13,6 @@ const cardSchema = new Schema({
         required: true
     },
     description: String,
-    labels: [String],
     dueDate: {
         type: Date,
     },
@@ -40,7 +39,6 @@ cardSchema.methods.toResponse = function () {
         listId: this.listId,
         title: this.title,
         desc: this.description,
-        labels: this.labels,
         dueDate: this.dueDate,
         assignedTo: this.assignedTo,
         position: this.position,
