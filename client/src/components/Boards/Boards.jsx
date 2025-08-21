@@ -1,39 +1,43 @@
 import Board from "./Board"
+import { useState } from "react"
 
 const Boards = () => {
+    const [boardsView, setBoardsView] = useState("Owned")
+    const boards = [
+        {
+            title : "Board 1",
+            desc : "This is a board",
+            active: true
+        },
+        {
+            title : "Board 1",
+            desc : "This is a board",
+            active: false
+        },
+        {
+            title : "Board 1",
+            desc : "This is a board",
+            active: false
+        },
+        {
+            title : "Board 1",
+            desc : "This is a board",
+            active: false
+        },
+    ]
+
     return (
-        <div className="bg-darkOne text-white h-145 w-80 rounded-2xl">
+        <div className="bg-darkOne text-white h-145 w-80 rounded-2xl flex-shrink-0">
             <h1 className="text-lg font-bold ml-4 my-2">Boards</h1>
             <nav className="mb-2">
-                <a href="#" className="inline-block w-2/4 text-center text-lg font-medium border-white border-2 py-1 border-x-0 hover:bg-white hover:text-darkOne">Owned</a>
-                <a href="#" className="inline-block w-2/4 text-center text-lg font-medium border-white border-2 py-1 border-x-0 hover:bg-white hover:text-darkOne">Member Of</a>
+                <a href="#" className={boardsView === "Owned" ? "boardsNavActive" : "boardsNavInactive"}>Owned</a>
+                <a href="#" className={boardsView !== "Owned" ? "boardsNavActive" : "boardsNavInactive"}>Member Of</a>
             </nav>
             <div className="h-3/4 overflow-y-auto px-2">
                 {/* Render All Boards */}
-                <Board boardInfo={{
-                    title: "Board 1",
-                    desc: "this is desc"
-                }}/>
-                <Board boardInfo={{
-                    title: "Board #",
-                    desc: "this is desc"
-                }}/>
-                <Board boardInfo={{
-                    title: "Board #",
-                    desc: "this is desc"
-                }}/>
-                <Board boardInfo={{
-                    title: "Board #",
-                    desc: "this is desc"
-                }}/>
-                <Board boardInfo={{
-                    title: "Board #",
-                    desc: "this is desc"
-                }}/>
-                <Board boardInfo={{
-                    title: "Board #",
-                    desc: "this is desc"
-                }}/>
+                {boards.map(board => (
+                    <Board boardInfo={board} />
+                ))}
             </div>
             <div className="flex justify-center mt-2">
                 <a href="#" className="inline-block bg-lightTwo text-darkOne px-3 py-1.5 rounded-md font-semibold">CREATE</a>

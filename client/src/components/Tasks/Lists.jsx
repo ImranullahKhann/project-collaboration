@@ -2,7 +2,7 @@ import List from "./List"
 
 export default function Lists () {
     return (
-        <div className="bg-darkTwo text-white h-145 w-3/5 rounded-2xl rounded-b-none ">
+        <div className="bg-darkTwo text-white h-145 w-3/5 rounded-2xl rounded-b-none flex-shrink-0">
             <div className="flex justify-between">
                 <h1 className="text-lg font-bold ml-4 my-2">Board 1</h1>
                 <div className="my-2 mr-4">
