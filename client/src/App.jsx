@@ -4,7 +4,7 @@ import "./main.css"
 import { useState } from "react"
 
 const App = () => {
-    const [isAuthenticated, setAuthenticated] = useState(false)
+    const [isAuthenticated, setAuthenticated] = useState(true)
     
     return isAuthenticated ? (
         <Dashboard />
