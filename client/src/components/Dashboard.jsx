@@ -1,15 +1,20 @@
 import Header from "./Header/Header"
-import Boards from "./Boards/Boards"
-import Lists from "./Tasks/Lists"
+import Friends from "./Friends"
+import Home from "./Home" 
+import { useState } from "react"
+
 
 const Dashboard = () => {
+    const [ menu, setMenu ] = useState("Home")
+
     return (
         <>
-            <Header />
-            <main className="flex justify-around mt-12 min-w-7xl">
-                <Boards />
-                <Lists />
-            </main>
+            <Header active={menu} setActive={setMenu} />
+            { menu === "Home" ? (
+                <Home />    
+            ) : (
+                <Friends />
+            ) }
         </>
     )
 }

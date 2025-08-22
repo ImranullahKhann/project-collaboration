@@ -15,6 +15,14 @@ body {
     opacity: 1;
 }
 
+.navButton {
+  @apply bg-darkOne text-white inline-block w-30 h-12 text-center text-lg hover:bg-lightOne cursor-pointer;
+}
+
+.navButton-active {
+  @apply bg-lightOne text-white inline-block w-30 h-12 text-center text-lg cursor-pointer;
+}
+
 .boardsNavInactive {
   @apply inline-block w-2/4 text-center text-lg font-medium border-white border-2 py-1 border-x-0 hover:bg-white hover:text-darkOne;
 }
@@ -29,4 +37,28 @@ body {
 
 .boardActive {
   @apply p-4 bg-lightTwo border-lightTwo border-2  text-darkOne mb-2 cursor-pointer; 
+}
+
+.authNavButton {
+  @apply text-lightTwo text-xl font-bold w-1/2 h-15 border-lightTwo border-2 cursor-pointer hover:bg-lightTwo hover:text-darkOne;
+}
+
+.authNavButton-active {
+  @apply text-darkOne bg-lightTwo text-xl font-bold w-1/2 h-15 border-lightTwo border-2 cursor-pointer;  
+}
+
+.authForm {
+  @apply p-8 w-full flex flex-col justify-center items-center h-4/6 gap-4;
+}
+
+.authTextInput {
+  @apply w-full text-white text-lg flex justify-between items-center;
+} 
+
+.authInputBox {
+  @apply border-2 border-white px-2 py-1 outline-none text-white w-90;
+}
+
+.authFormButton {
+  @apply mt-8 bg-lightTwo text-darkOne text-lg px-3 py-1.5 font-semibold rounded-lg cursor-pointer hover:bg-[#f5cede];
 }
