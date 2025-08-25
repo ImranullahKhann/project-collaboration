@@ -5,22 +5,26 @@ const Boards = () => {
     const [boardsView, setBoardsView] = useState("Owned")
     const boards = [
         {
+            id: 1,
             title : "Board 1",
             desc : "This is a board",
             active: true
         },
         {
-            title : "Board 1",
+            id: 2,
+            title : "Board 2",
             desc : "This is a board",
             active: false
         },
         {
-            title : "Board 1",
+            id: 3,
+            title : "Board 3",
             desc : "This is a board",
             active: false
         },
         {
-            title : "Board 1",
+            id: 4,
+            title : "Board 4",
             desc : "This is a board",
             active: false
         },
@@ -36,7 +40,7 @@ const Boards = () => {
             <div className="h-3/4 overflow-y-auto px-2">
                 {/* Render All Boards */}
                 {boards.map(board => (
-                    <Board boardInfo={board} />
+                    <Board key={board.id} boardInfo={board} />
                 ))}
             </div>
             <div className="flex justify-center mt-2">
