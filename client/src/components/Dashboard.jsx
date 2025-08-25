@@ -1,5 +1,5 @@
 import Header from "./Header/Header"
-import Friends from "./Friends"
+import Friends from "./Friends/Friends"
 import Home from "./Home" 
 import { useState } from "react"
 

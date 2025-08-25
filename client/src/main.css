@@ -10,6 +10,10 @@
   --color-lightDarkOne: rgba(97, 63, 117, 0.5);
 }
  
+* {
+  box-sizing: border-box;
+}
+
 body {
     background-color: rgba(97, 63, 117, 0.5);
     opacity: 1;
